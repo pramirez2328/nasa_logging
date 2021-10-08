@@ -9,6 +9,10 @@ import NewAccount from "./components/NewAccount";
 function App() {
   const [newSignUp, setNewSignUp] = useState(false);
 
+  const handleNewSignUp = () => {
+    setNewSignUp(true);
+  };
+
   if (newSignUp) {
     return (
       <div className="App">
@@ -24,7 +28,7 @@ function App() {
           <Title />
           <hr />
           <Form />
-          <SignUp />
+          <SignUp onClick={handleNewSignUp} />
           <Specification />
         </Card>
       </div>
