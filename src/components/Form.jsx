@@ -1,8 +1,8 @@
 import React from "react";
 import style from "./Form.module.css";
-function Form() {
+function Form({ onSubmit }) {
   return (
-    <form id={style.form}>
+    <form id={style.form} onSubmit={onSubmit}>
       <div className={style.inputs}>
         <label htmlFor="username">Username</label>
         <input type="text" id="username" />
@@ -11,7 +11,9 @@ function Form() {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" />
       </div>
-      <button type="submit">SUBMIT</button>
+      <button type="submit" id={style.button}>
+        SUBMIT
+      </button>
     </form>
   );
 }

@@ -22,7 +22,7 @@ input {
   border: none;
 }
 
-button {
+#button {
   padding: 0.4em;
   margin-top: 1em;
   color: rgb(174, 171, 171);
