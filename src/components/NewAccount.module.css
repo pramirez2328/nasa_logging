@@ -1,0 +1,41 @@
+#form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: grey;
+  font-size: 1.4em;
+  margin: 0.5em 0;
+}
+
+input {
+  height: 2em;
+  padding-left: 1em;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+}
+
+button {
+  padding: 0.4em;
+  margin-top: 1em;
+  color: rgb(174, 171, 171);
+  text-shadow: 1px 1px black;
+  font-weight: bold;
+  font-size: 1.2em;
+  background-color: rgb(198, 193, 193);
+  letter-spacing: 0.5em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(184, 184, 184);
+}
