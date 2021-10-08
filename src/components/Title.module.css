@@ -1,0 +1,12 @@
+#title {
+  text-align: center;
+}
+
+#title h1 {
+  color: grey;
+  text-shadow: 1px 1px black;
+}
+
+#title h5 {
+  color: blue;
+}
