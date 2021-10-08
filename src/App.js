@@ -32,18 +32,53 @@ function App() {
 
   const handleNewUser = (e) => {
     e.preventDefault();
-    const newUser = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      username: e.target.newUsername.value,
-      password: e.target.confirmPassword.value,
-    };
+    const name = e.target.name.value !== "" ? e.target.name.value : "invalid";
+    const email = e.target.name.value !== "" ? e.target.email.value : "invalid";
+    const username =
+      e.target.name.value !== "" ? e.target.newUsername.value : "invalid";
+    const password =
+      e.target.name.value !== "" ? e.target.newPassword.value : "invalid";
+    const confirmPassword =
+      e.target.name.value !== ""
+        ? e.target.newConfirmPassword.value
+        : "invalid";
 
-    setNewUsers((prev) => {
-      return [...prev, newUser];
-    });
+    if (name === "invalid") {
+      document.querySelector(".invalidName").textContent =
+        "  - Enter your name!";
+    }
 
-    setNewSignUp(false);
+    if (email === "invalid") {
+      document.querySelector(".invalidEmail").textContent =
+        "  - Enter your email!";
+    }
+
+    if (username === "invalid") {
+      document.querySelector(".invalidUsername").textContent =
+        "  - Enter your username!";
+    }
+
+    if (password === "invalid") {
+      document.querySelector(".invalidPassword").textContent =
+        "  - Enter a password!";
+    }
+
+    if (confirmPassword === "invalid") {
+      document.querySelector(".invalidConfirmPassword").textContent =
+        "  - confirm your password!";
+    }
+    // const newUser = {
+    //   name,
+    //   email: e.target.email.value,
+    //   username: e.target.newUsername.value,
+    //   password: e.target.confirmPassword.value,
+    // };
+
+    // setNewUsers((prev) => {
+    //   return [...prev, newUser];
+    // });
+
+    // setNewSignUp(false);
   };
 
   useEffect(() => {

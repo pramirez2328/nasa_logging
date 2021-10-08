@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+#invalidName {
+  color: red;
+}
+
 .inputs {
   display: flex;
   flex-direction: column;
@@ -38,4 +42,9 @@ input {
 
 button:hover {
   background-color: rgb(184, 184, 184);
+}
+
+.invalid {
+  font-size: x-small;
+  color: red;
 }
