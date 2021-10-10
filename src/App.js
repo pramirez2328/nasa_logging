@@ -11,6 +11,7 @@ function App() {
   const [newSignUp, setNewSignUp] = useState(false);
   const prevUsers = JSON.parse(localStorage.getItem("users"));
   const [newUsers, setNewUsers] = useState([...prevUsers] || []);
+  const [permisionGranted, setpermisionGranted] = useState(false);
 
   const handleLogIn = (e) => {
     e.preventDefault();
@@ -24,61 +25,110 @@ function App() {
     );
     username.value = "";
     password.value = "";
+    if (usernameValidation && passwordValidation) {
+      setpermisionGranted(true);
+    }
   };
 
   const handleSignUp = () => {
     setNewSignUp(true);
   };
 
+  const handleEmptyInputs = (
+    name,
+    email,
+    username,
+    newPassword,
+    confirmPassword
+  ) => {
+    let allInputs = 0;
+
+    let nameTag = document.querySelector(".invalidName");
+    if (name.value === "") {
+      nameTag.textContent = "  - Enter your name!";
+    } else {
+      allInputs++;
+      nameTag.textContent = "";
+    }
+
+    let emailTag = document.querySelector(".invalidEmail");
+    if (email.value === "") {
+      emailTag.textContent = "  - Enter your email!";
+    } else {
+      allInputs++;
+      emailTag.textContent = "";
+    }
+
+    let usernameTag = document.querySelector(".invalidUsername");
+    if (username.value === "") {
+      usernameTag.textContent = "  - Enter your username!";
+    } else {
+      allInputs++;
+      usernameTag.textContent = "";
+    }
+
+    let passwordTag = document.querySelector(".invalidPassword");
+    if (newPassword.value === "") {
+      passwordTag.textContent = "  - Enter a password!";
+    } else {
+      allInputs++;
+      passwordTag.textContent = "";
+    }
+
+    let confirmTag = document.querySelector(".invalidConfirmPassword");
+    if (confirmPassword.value === "") {
+      confirmTag.textContent = "  - confirm your password!";
+    } else {
+      allInputs++;
+      confirmTag.textContent = "";
+    }
+
+    return allInputs;
+  };
+
   const handleNewUser = (e) => {
     e.preventDefault();
-    const name = e.target.name.value !== "" ? e.target.name.value : "invalid";
-    const email = e.target.name.value !== "" ? e.target.email.value : "invalid";
-    const username =
-      e.target.name.value !== "" ? e.target.newUsername.value : "invalid";
-    const password =
-      e.target.name.value !== "" ? e.target.newPassword.value : "invalid";
-    const confirmPassword =
-      e.target.name.value !== ""
-        ? e.target.newConfirmPassword.value
-        : "invalid";
+    let name = e.target.name;
+    let email = e.target.email;
+    let username = e.target.newUsername;
+    let newPassword = e.target.newPassword;
+    let confirmPassword = e.target.confirmPassword;
+    let newUser = {};
 
-    if (name === "invalid") {
-      document.querySelector(".invalidName").textContent =
-        "  - Enter your name!";
+    const allInputs = handleEmptyInputs(
+      name,
+      email,
+      username,
+      newPassword,
+      confirmPassword
+    );
+
+    if (allInputs === 5) {
+      if (newPassword.value === confirmPassword.value) {
+        newUser = {
+          name: name.value,
+          email: email.value,
+          username: username.value,
+          password: confirmPassword.value,
+        };
+
+        name.value = "";
+        email.value = "";
+        username.value = "";
+        newPassword.value = "";
+        confirmPassword.value = "";
+
+        setNewUsers((prev) => {
+          return [...prev, newUser];
+        });
+
+        setNewSignUp(false);
+      } else {
+        alert(
+          "Passwords do not match... \n confirm the same password to proceed!"
+        );
+      }
     }
-
-    if (email === "invalid") {
-      document.querySelector(".invalidEmail").textContent =
-        "  - Enter your email!";
-    }
-
-    if (username === "invalid") {
-      document.querySelector(".invalidUsername").textContent =
-        "  - Enter your username!";
-    }
-
-    if (password === "invalid") {
-      document.querySelector(".invalidPassword").textContent =
-        "  - Enter a password!";
-    }
-
-    if (confirmPassword === "invalid") {
-      document.querySelector(".invalidConfirmPassword").textContent =
-        "  - confirm your password!";
-    }
-    // const newUser = {
-    //   name,
-    //   email: e.target.email.value,
-    //   username: e.target.newUsername.value,
-    //   password: e.target.confirmPassword.value,
-    // };
-
-    // setNewUsers((prev) => {
-    //   return [...prev, newUser];
-    // });
-
-    // setNewSignUp(false);
   };
 
   useEffect(() => {
@@ -88,6 +138,8 @@ function App() {
   const handleCancelSubcription = () => {
     setNewSignUp(false);
   };
+
+  const permision = <h1 id="permision">...PERMISION GRANTED!</h1>;
 
   if (newSignUp) {
     return (
@@ -103,13 +155,17 @@ function App() {
   } else {
     return (
       <div className="App">
-        <Card>
-          <Title />
-          <hr />
-          <Form onSubmit={handleLogIn} />
-          <SignUp onClick={handleSignUp} />
-          <Specification />
-        </Card>
+        {!permisionGranted ? (
+          <Card>
+            <Title />
+            <hr />
+            <Form onSubmit={handleLogIn} />
+            <SignUp onClick={handleSignUp} />
+            <Specification />
+          </Card>
+        ) : (
+          <Card>{permision}</Card>
+        )}
       </div>
     );
   }
