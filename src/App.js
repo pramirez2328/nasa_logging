@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import reactDom from "react-dom";
 import "./App.css";
 import Card from "./components/Card";
@@ -13,12 +13,14 @@ import ConfirmationError from "./components/ConfirmationError";
 function App() {
   const [newSignUp, setNewSignUp] = useState(false);
   const prevUsers = JSON.parse(localStorage.getItem("users"));
-  const [newUsers, setNewUsers] = useState([...prevUsers] || []);
+  const [newUsers, setNewUsers] = useState(prevUsers || []);
   const [permisionGranted, setpermisionGranted] = useState(false);
   const [confirmError, setConfirmError] = useState(false);
+  const nameRef = useRef();
 
   const handleLogIn = (e) => {
     e.preventDefault();
+
     const username = e.target.username;
     const password = e.target.password;
     const usernameValidation = newUsers.some(
@@ -94,6 +96,7 @@ function App() {
 
   const handleNewUser = (e) => {
     e.preventDefault();
+    console.log(nameRef);
     let name = e.target.name;
     let email = e.target.email;
     let username = e.target.newUsername;
@@ -128,10 +131,9 @@ function App() {
           return [...prev, newUser];
         });
 
-        setNewSignUp(false);
+        // setNewSignUp(true);
       } else {
         setConfirmError(true);
-        console.log(confirmError);
       }
     }
   };
@@ -151,15 +153,13 @@ function App() {
     setConfirmError(false);
   };
 
-  console.log(confirmError);
-
   if (newSignUp) {
     return (
       <div className="App" style={styleError}>
         <Card>
           <Title />
           <hr />
-          <NewAccount onSubmit={handleNewUser} />
+          <NewAccount onSubmit={handleNewUser} nameRef={nameRef} />
           <CancelNewAccount onClick={handleCancelSubcription} />
         </Card>
 

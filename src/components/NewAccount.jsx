@@ -1,12 +1,13 @@
 import React from "react";
 import style from "./NewAccount.module.css";
-function NewAccount({ onSubmit }) {
+function NewAccount({ onSubmit, nameRef }) {
   const invalid = { fontSize: "0.5em", color: "red" };
+
   return (
     <div id={style.newAccount}>
       <form id={style.form} onSubmit={onSubmit}>
         <div className={style.inputs}>
-          <label htmlFor="name">
+          <label htmlFor="name" ref={nameRef}>
             Full name
             <span className="invalidName" style={invalid}></span>
           </label>
