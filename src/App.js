@@ -17,10 +17,13 @@ function App() {
   const [permisionGranted, setpermisionGranted] = useState(false);
   const [confirmError, setConfirmError] = useState(false);
   const nameRef = useRef();
+  const emailRef = useRef();
+  const usernameRef = useRef();
+  const newPasswordRef = useRef();
+  const confirmPasswordRef = useRef();
 
   const handleLogIn = (e) => {
     e.preventDefault();
-
     const username = e.target.username;
     const password = e.target.password;
     const usernameValidation = newUsers.some(
@@ -35,6 +38,8 @@ function App() {
 
     if (usernameValidation && passwordValidation) {
       setpermisionGranted(true);
+    } else {
+      alert("Username or password are incorrect! \n please try again");
     }
   };
 
@@ -51,44 +56,39 @@ function App() {
   ) => {
     let allInputs = 0;
 
-    let nameTag = document.querySelector(".invalidName");
     if (name.value === "") {
-      nameTag.textContent = "  - Enter your name!";
+      nameRef.current.innerText = "  - Enter your name!";
     } else {
       allInputs++;
-      nameTag.textContent = "";
+      nameRef.current.innerText = "";
     }
 
-    let emailTag = document.querySelector(".invalidEmail");
     if (email.value === "") {
-      emailTag.textContent = "  - Enter your email!";
+      emailRef.current.innerText = "  - Enter your email!";
     } else {
       allInputs++;
-      emailTag.textContent = "";
+      emailRef.current.innerText = "";
     }
 
-    let usernameTag = document.querySelector(".invalidUsername");
     if (username.value === "") {
-      usernameTag.textContent = "  - Enter your username!";
+      usernameRef.current.innerText = "  - Enter your username!";
     } else {
       allInputs++;
-      usernameTag.textContent = "";
+      usernameRef.current.innerText = "";
     }
 
-    let passwordTag = document.querySelector(".invalidPassword");
     if (newPassword.value === "") {
-      passwordTag.textContent = "  - Enter a password!";
+      newPasswordRef.current.innerText = "  - Enter a password!";
     } else {
       allInputs++;
-      passwordTag.textContent = "";
+      newPasswordRef.current.innerText = "";
     }
 
-    let confirmTag = document.querySelector(".invalidConfirmPassword");
     if (confirmPassword.value === "") {
-      confirmTag.textContent = "  - confirm your password!";
+      confirmPasswordRef.current.innerText = "  - confirm your password!";
     } else {
       allInputs++;
-      confirmTag.textContent = "";
+      confirmPasswordRef.current.innerText = "";
     }
 
     return allInputs;
@@ -96,7 +96,6 @@ function App() {
 
   const handleNewUser = (e) => {
     e.preventDefault();
-    console.log(nameRef);
     let name = e.target.name;
     let email = e.target.email;
     let username = e.target.newUsername;
@@ -131,7 +130,7 @@ function App() {
           return [...prev, newUser];
         });
 
-        // setNewSignUp(true);
+        setNewSignUp(false);
       } else {
         setConfirmError(true);
       }
@@ -159,7 +158,14 @@ function App() {
         <Card>
           <Title />
           <hr />
-          <NewAccount onSubmit={handleNewUser} nameRef={nameRef} />
+          <NewAccount
+            onSubmit={handleNewUser}
+            nameRef={nameRef}
+            emailRef={emailRef}
+            usernameRef={usernameRef}
+            newPasswordRef={newPasswordRef}
+            confirmPasswordRef={confirmPasswordRef}
+          />
           <CancelNewAccount onClick={handleCancelSubcription} />
         </Card>
 
