@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import reactDom from "react-dom";
 import "./App.css";
 import Card from "./components/Card";
 import Title from "./components/Title";
@@ -7,11 +8,14 @@ import Specification from "./components/Specification";
 import SignUp from "./components/SignUp";
 import NewAccount from "./components/NewAccount";
 import CancelNewAccount from "./components/CancelNewAccount";
+import ConfirmationError from "./components/ConfirmationError";
+
 function App() {
   const [newSignUp, setNewSignUp] = useState(false);
   const prevUsers = JSON.parse(localStorage.getItem("users"));
   const [newUsers, setNewUsers] = useState([...prevUsers] || []);
   const [permisionGranted, setpermisionGranted] = useState(false);
+  const [confirmError, setConfirmError] = useState(false);
 
   const handleLogIn = (e) => {
     e.preventDefault();
@@ -23,8 +27,10 @@ function App() {
     const passwordValidation = newUsers.some(
       (i) => i.password === password.value
     );
+
     username.value = "";
     password.value = "";
+
     if (usernameValidation && passwordValidation) {
       setpermisionGranted(true);
     }
@@ -124,9 +130,8 @@ function App() {
 
         setNewSignUp(false);
       } else {
-        alert(
-          "Passwords do not match... \n confirm the same password to proceed!"
-        );
+        setConfirmError(true);
+        console.log(confirmError);
       }
     }
   };
@@ -140,16 +145,30 @@ function App() {
   };
 
   const permision = <h1 id="permision">...PERMISION GRANTED!</h1>;
+  let styleError = confirmError ? { opacity: "0.2", zIndex: "1" } : {};
+
+  const handleReturn = () => {
+    setConfirmError(false);
+  };
+
+  console.log(confirmError);
 
   if (newSignUp) {
     return (
-      <div className="App">
+      <div className="App" style={styleError}>
         <Card>
           <Title />
           <hr />
           <NewAccount onSubmit={handleNewUser} />
           <CancelNewAccount onClick={handleCancelSubcription} />
         </Card>
+
+        {confirmError
+          ? reactDom.createPortal(
+              <ConfirmationError clear={handleReturn} />,
+              document.getElementById("confirm_root")
+            )
+          : null}
       </div>
     );
   } else {

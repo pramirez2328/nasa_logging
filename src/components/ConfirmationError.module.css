@@ -1,0 +1,31 @@
+#confirmationError {
+  position: absolute;
+  text-align: center;
+  width: 40%;
+  top: 40%;
+  left: 28%;
+  border: 1px solid blue;
+  background-color: red;
+  border-radius: 10px;
+  padding: 1.5em;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  animation-name: model;
+  animation-duration: 1s;
+}
+
+#confirmationError h4 {
+  font-weight: bold;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: white;
+}
+
+@keyframes model {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
